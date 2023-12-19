@@ -1,3 +1,4 @@
 DOCKER_BUILDKIT=1
 docker buildx build --platform linux/amd64,linux/arm64 -t gneginskiy/msa .
 docker buildx build --platform linux/amd64,linux/arm64 -t gneginskiy/msa:1.0 --push .
+docker run -p 8080:8080 gneginskiy/msa:1.0
