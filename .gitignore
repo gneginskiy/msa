@@ -1,0 +1,48 @@
+# always git-ignore node_modules in any JS project!
+node_modules
+/db/
+/backup/*
+# package-lock.json too!
+frontend/package-lock.json
+
+HELP.md
+.gradle
+build/
+gradlew.bat
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+/tokens/StoredCredential
+
+### h2 db file
+*.mb.db
+/db/testdb.mv.db
+/logs/
+/nohup.out
+/testdb.trace.db
+/frontend/.vscode/
+/testdb.trace.db.old
+/db/.tar.gz
+/db/testdb.mv.db
+/.idea/
