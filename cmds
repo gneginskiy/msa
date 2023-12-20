@@ -6,8 +6,26 @@ docker run -p 8080:8080 gneginskiy/msa:1.0
 
 
 
-kubectl apply -f msa-app.yaml
 kubectl get deployments
 kubectl get services
 kubectl get pods
 kubectl get ingress
+
+#minikube start --vm --addons=ingress,ingress-dns,dashboard --driver=qemu2
+minikube start --driver qemu --network socket_vmnet
+kubectl delete pods --all & kubectl delete ingresses --all & kubectl delete deployments --all & kubectl delete services --all
+kubectl apply -f msa-app.yaml
+kubectl port-forward svc/msa-service 8080:8080
+then localhost:8080/health/ or localhost:8080/health
+
+minikube addons enable ingress
+
+brew install socket_vmnet
+sudo brew services start socket_vmnet
+minikube delete --all
+
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.41.2/deploy/static/provider/cloud/deploy.yaml
+
+
+https://devopscube.com/minikube-mac/
