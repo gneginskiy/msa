@@ -23,19 +23,19 @@ spec:
           # Use the provided Docker image
           image: gneginskiy/msa:1.0
           ports:
-            - containerPort: 8080
+            - containerPort: 8000
           # Define liveness probe to check if the container is healthy
           livenessProbe:
             httpGet:
               path: /health/
-              port: 8080
+              port: 8000
             initialDelaySeconds: 3
             periodSeconds: 3
           # Define readiness probe to check if the container is ready to serve traffic
           readinessProbe:
             httpGet:
               path: /health/
-              port: 8080
+              port: 8000
             initialDelaySeconds: 3
             periodSeconds: 3
 
@@ -50,11 +50,11 @@ spec:
   # Select Pods with the 'app=msa' label
   selector:
     app: msa
-  # Map incoming traffic on port 80 to the container's port 8080
+  # Map incoming traffic on port 80 to the container's port 8000
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
+      targetPort: 8000
   type: NodePort
 
 # Separate Kubernetes resources using '---'
