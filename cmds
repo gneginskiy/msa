@@ -15,8 +15,8 @@ kubectl get ingress
 minikube start --driver qemu --network socket_vmnet
 kubectl delete pods --all & kubectl delete ingresses --all & kubectl delete deployments --all & kubectl delete services --all
 kubectl apply -f msa-app.yaml
-kubectl port-forward svc/msa-service 8080:8080
-then localhost:8080/health/ or localhost:8080/health
+kubectl port-forward svc/msa-service 8000:8000
+then localhost:8000/health/ or localhost:8000/health
 
 minikube addons enable ingress
 
