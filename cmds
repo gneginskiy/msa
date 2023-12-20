@@ -29,3 +29,6 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 
 
 https://devopscube.com/minikube-mac/
+
+#to access msa-service w/o port forwarding
+minikube service msa-service
