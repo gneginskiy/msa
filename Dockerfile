@@ -14,6 +14,6 @@ WORKDIR /app
 # Copy only the built JAR file from the previous stage
 COPY --from=builder /app/build/libs/otus-msa-0.0.1-SNAPSHOT.jar .
 # Expose the default Spring Boot port
-EXPOSE 8080
+EXPOSE 8000
 # Set the default command to run the Spring Boot application
 CMD ["java", "-jar", "otus-msa-0.0.1-SNAPSHOT.jar"]
