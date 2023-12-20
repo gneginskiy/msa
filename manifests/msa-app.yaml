@@ -73,7 +73,7 @@ spec:
     - host: arch.homework
       http:
         paths:
-          # Route all traffic at the root path to the msa-service
+          # Route requests with /otusapp/gneginskiy/* to the msa-service with path rewrite
           - path: /otusapp/gneginskiy/([^/]+)(/.*)?
             pathType: Prefix
             backend:
@@ -81,7 +81,7 @@ spec:
                 name: msa-service
                 port:
                   number: 80
-          # Route requests with /otusapp/gneginskiy/* to the msa-service with path rewrite
+          # Route all traffic at the root path to the msa-service
           - path: /(.*)
             pathType: Prefix
             backend:
