@@ -1,4 +1,4 @@
-package com.otus.msa.model;
+package com.otus.msa.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
