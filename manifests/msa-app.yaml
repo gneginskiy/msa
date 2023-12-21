@@ -1,0 +1,91 @@
+# msa-app.yaml
+
+# Define a Deployment to manage the lifecycle of our application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msa-deployment
+spec:
+  # Set the number of replicas to ensure high availability
+  replicas: 2
+  # Define a selector to match Pods controlled by this Deployment
+  selector:
+    matchLabels:
+      app: msa
+  template:
+    metadata:
+      labels:
+        app: msa
+    spec:
+      # Specify the container details
+      containers:
+        - name: msa-container
+          # Use the provided Docker image
+          image: gneginskiy/msa:1.0
+          ports:
+            - containerPort: 8000
+          # Define liveness probe to check if the container is healthy
+          livenessProbe:
+            httpGet:
+              path: /health/
+              port: 8000
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          # Define readiness probe to check if the container is ready to serve traffic
+          readinessProbe:
+            httpGet:
+              path: /health/
+              port: 8000
+            initialDelaySeconds: 3
+            periodSeconds: 3
+
+# Separate Kubernetes resources using '---'
+---
+# Define a Service to expose the Deployment internally within the cluster
+apiVersion: v1
+kind: Service
+metadata:
+  name: msa-service
+spec:
+  # Select Pods with the 'app=msa' label
+  selector:
+    app: msa
+  # Map incoming traffic on port 80 to the container's port 8000
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: NodePort
+
+# Separate Kubernetes resources using '---'
+---
+# Define an Ingress to route external traffic to the Service
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: msa-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    # Define a rule for the host 'arch.homework'
+    - host: arch.homework
+      http:
+        paths:
+          # Route requests with /otusapp/gneginskiy/* to the msa-service with path rewrite
+          - path: /otusapp/gneginskiy/([^/]+)(/.*)?
+            pathType: Prefix
+            backend:
+              service:
+                name: msa-service
+                port:
+                  number: 80
+          # Route all traffic at the root path to the msa-service
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: msa-service
+                port:
+                  number: 80
